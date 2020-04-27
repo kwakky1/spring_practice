@@ -77,9 +77,7 @@ footer {
 <section>
   <nav>
     <ul>
-      <li><a id="a-first" href="#">Join</a></li>
-      <li><a id="a-second" href="../index.html">Login</a></li>
-      <li><a id="a-third" href="#">List</a></li>
+      <li><a id="home_a">홈으로</a></li>
     </ul>
   </nav>
   
@@ -93,6 +91,7 @@ footer {
    	<input id="comfirm-button" type="button" value="당첨 확인">
    	
    </form>
+   <div id = "lottonumber"></div>
    <div id ="result"></div>
   </article>
 </section>
@@ -101,6 +100,14 @@ footer {
   <p>Footer</p>
 </footer>
 <script type="text/javascript">
+$('#home_a')
+.css('cursor','pointer')
+.click(e=>{
+	e.preventDefault()
+	location.href="../index.html"
+})
+
+
 $('#put-button').click(e=>{
 	console.log('aaaaa');
 	e.preventDefault();
@@ -131,6 +138,7 @@ $('#comfirm-button').click(e=>{
 		contentType:'application/json',
 		success: (d)=>{
 			$('#result').html('<h3>로또결과 :'+d+'<h3>')
+			$('#lottonumber').html('<h3>로또결과 :'+d+'<h3>')
 		},
 		error: (request,status,error)=>{
 			alert("code:"+request.status+"\n"+"message:"

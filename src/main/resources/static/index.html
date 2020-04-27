@@ -77,9 +77,11 @@ footer {
 <section>
   <nav>
     <ul>
-      <li><a id="a-first" href="member/join.html">Join</a></li>
-      <li><a id="a-second" href="#">Login</a></li>
-      <li><a id="a-third" href="#">List</a></li>
+      <li><a id="join_a" >관리자 회원가입</a></li>
+      <li><a id="login_a">관리자 로그인</a></li>
+      <li><a id="signup_a">사용자 회원가입</a></li>
+      <li><a id="signin_a">사용자 로그인</a></li>
+      <li><a id="lotto_a" >로또 한방</a></li>
     </ul>
   </nav>
   
@@ -99,14 +101,39 @@ footer {
 <footer>
   <p>Footer</p>
 </footer>
-<script type="text/javascript">
-$('#a-first').click(function(){
-})
-$('#a-second').click(function(){
-})
-$('#a-third').click(function(){
+<script >
 
+$('#join_a')
+.css('cursor','pointer')
+.click(e=>{
+	e.preventDefault()
+	location.href="/member/join.html"
 })
+$('#login_a')
+.css('cursor','pointer')
+.click(e=>{
+	e.preventDefault()
+	location.href="/index.html"
+})
+$('#signup_a')
+.css('cursor','pointer')
+.click(e=>{
+	e.preventDefault()
+	location.href="/user/signup.html"
+})
+$('#signin_a')
+.css('cursor','pointer')
+.click(e=>{
+	e.preventDefault()
+	location.href="/user/signin.html"
+})
+$('#lotto_a')
+.css('cursor','pointer')
+.click(e=>{
+	e.preventDefault()
+	location.href="/lotto/buy.html"
+})
+
 $('#login-button').click(function(){
 	$.ajax({
 		url:'/member/login',
@@ -117,7 +144,7 @@ $('#login-button').click(function(){
 		contentType:'application/json',
 		success:function(message){
 			if(message ==='SUCCESS'){
-				location.href="grade/register.html"
+				location.href="member/list.html"
 			} else {
 				alert('다시 로그인해주세요!')
 				location.href="index.html"

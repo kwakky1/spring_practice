@@ -1,4 +1,6 @@
 package com.occamasrazor.web.lotto;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 import org.springframework.stereotype.Service;
 
@@ -6,18 +8,14 @@ import com.occamasrazor.web.util.LottoResult;
 
 @Service
 public class LottoServiceImpl implements LottoService {
-	private Lotto lotto;
 	private int[] number;
-	private LottoResult result;
-	private int count;
+	private Map<String,Object> map;
 	private Random random;
 	
 	public LottoServiceImpl() {
-		result = null;
-		lotto = new Lotto();
-		count =0;
 		random = new Random();
 		number = new int[6];
+		map = new HashMap<>();
 	}
 
 
@@ -36,9 +34,9 @@ public class LottoServiceImpl implements LottoService {
 	
 
 	@Override
-	public void compare() {
+	public LottoResult compare(Lotto lotto) {
 		LottoResult result =null;
-		String[] putLotto = lotto.getLotto().split(",");
+		String[] putLotto = detail(lotto.getUserid()).getLotto().split(",");
 		int[] putRandom = random();
 		int count=0;
 		for(int i =0; i < putRandom.length ; i++) {
@@ -56,53 +54,22 @@ public class LottoServiceImpl implements LottoService {
 			default: result = LottoResult.FAIL;break;
 		}
 		
-		System.out.println("result " + result);
 		
-		this.result = result;
-	}
-	
-	public LottoResult getLottoResult() {
 		return result;
 	}
-		
-		/*
-		int a[] = random();
-		for(int k=0;k<count;k++) {
-			String[] lotto = lottos[k].getLotto().split(",");
-			for(int i =0; i < a.length ; i++) {
-				for(int j = 0; j< lotto.length; j++) {
-					if(a[i] == Integer.parseInt(lotto[j])) {
-						count++;
-					}
-				}
-			}
-		}
-		
-		
-		
-		
-		
-		switch(count) {
-		case 1:
-			break;
-		}
-		return compare;
-	}
-	*/
-
-
+	
 	@Override
 	public void add(Lotto lotto) {
-		
+		map.put(lotto.getUserid(), lotto);
 	}
-
-
-	@Override
-	public void putLotto(Lotto lotto) {
-		this.lotto = lotto;
-		System.out.println("시작");
-		compare();
-	}
-
 	
+	@Override
+	public int count() {
+		return map.size();
+	}
+	
+	@Override
+	public Lotto detail(String userid) {
+		return (Lotto) map.get(userid);
+	}
 }

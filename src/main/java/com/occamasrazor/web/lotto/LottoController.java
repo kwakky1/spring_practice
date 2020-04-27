@@ -1,5 +1,8 @@
 package com.occamasrazor.web.lotto;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,15 +20,15 @@ public class LottoController {
 	
 	@PostMapping("/buy")
 	public Messenger put(@RequestBody Lotto lotto) {
-		System.out.println("하이"+lotto);
-		lottoService.putLotto(lotto);
+		
 		return Messenger.SUCCESS;
 		
 	}
 	@GetMapping("/comfirm")
-	public LottoResult result() {
-		System.out.println(lottoService.getLottoResult());
-		return lottoService.getLottoResult();
+	public Map<String,Object> result(@RequestBody Lotto lotto) {
+		Map<String,Object> returnMap = new HashMap<>();
+		LottoResult resultLotto = lottoService.compare(lotto);
+		return returnMap;
 		
 	}
 }

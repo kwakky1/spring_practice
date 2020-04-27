@@ -71,13 +71,13 @@ footer {
 </head>
 <body>
 <header>
-  <h2>회원가입</h2>
+  <h2>사용자 회원가입</h2>
 </header>
 
 <section>
   <nav>
     <ul>
-      <li><a id="home_a" >홈으로</a></li>
+      <li><a id="home_a">홈으로</a></li>
     </ul>
   </nav>
   
@@ -93,7 +93,7 @@ footer {
    	<input id="ssn" type="text"><br>
    	<label>ADDR</label><br>
    	<input id="addr" type="text"><br>
-   	<input id="join-button" type="button" value="회원가입">
+   	<input id="signup-button" type="button" value="사용자 회원가입">
    	<input id="cancel-button" type="button" value="취소">
    	
    </form>
@@ -103,42 +103,40 @@ footer {
 <footer>
   <p>Footer</p>
 </footer>
-<script type="text/javascript">
+<script>
 $('#home_a')
-.css('cursor','pointer')
-.click(e=>{
+	.css('cursor','pointer')
+	.click(e=>{
+		e.preventDefault()
+		location.href="../index.html"
+	})
+$('#signup-button').click(e=>{
 	e.preventDefault()
-	location.href ="../index.html"
-})
-$('#join-button').click(function(){
-	let member = {
+	$.ajax({
+		url:'/user/signup',
+		type:'post',
+		data: JSON.stringify({
 			name: $('#name').val(),
 			userid: $('#userid').val(),
 			password: $('#password').val(),
 			ssn: $('#ssn').val(),
 			addr: $('#addr').val()
-	}
-	$.ajax({
-		url:'/member/join',
-		type:'post',
-		data: JSON.stringify(member),
+		}),
 		dataType:'json',
 		contentType:'application/json',
-		success:function(message){
-			if(message === 'SUCCESS'){
-				location.href="../index.html"
+		success:d=>{
+			if(d === 'SUCCESS'){
+				location.href="signin.html"
 			} else {
-				location.href="join.html"
+				location.href="signup.html"
 			}
 		},
-		error:function(){
-			alert('회원가입실패')
+		error:(r)=>{
+			alert('에러 '+ r.status)
 		}
 	})
 })
-$('#cancel-button').click(function(){
-	alert('취소버튼 클릭')
-})
+
 </script>
 </body>
 </html>
